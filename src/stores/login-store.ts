@@ -112,5 +112,8 @@ export const useLoginStore = defineStore('login', {
       this.permissions = []
     },
   },
-  persist: true,
 })
+
+// If you are using pinia-plugin-persistedstate, add this to your store file or main.ts
+// import { useLoginStore } from './login-store'
+// useLoginStore.persist = true
