@@ -44,3 +44,11 @@ export interface ISurveyResponse {
   date: string
   status: string
 }
+
+export interface IQuestion {
+  id: number
+  title: string
+  type: 'text' | 'textarea' | 'radio' | 'checkbox'
+  options: string[]
+  required: boolean
+}

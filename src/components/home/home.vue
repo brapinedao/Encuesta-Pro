@@ -1,11 +1,17 @@
 <template>
   <div class="surveys">
-    <h1 class="title">Mis Encuestas</h1>
+    <div class="title-bar">
+      <h1 class="title">Mis Encuestas</h1>
+      <RouterLink to="/encuestas" class="new-survey-btn">
+        <span class="plus">+</span>
+        Nueva Encuesta
+      </RouterLink>
+    </div>
     <p class="subtitle">Gestiona y visualiza todas tus encuestas en un solo lugar</p>
 
     <!-- Buscador y Filtros -->
     <div class="toolbar">
-      <input type="text" placeholder="🔍 Buscar encuestas..." class="search" />
+      <input type="text" placeholder="Buscar encuestas..." class="search" />
       <button class="filter-btn">⚙️ Filtros</button>
     </div>
 
@@ -42,6 +48,7 @@ import { useHomeStore } from '@/stores/home-store'
 // imports
 const { getSurveys } = useHomeStore()
 const { surveys } = storeToRefs(useHomeStore())
+import '@/styles/css/home.css'
 
 // tabs
 const currentTab = ref('Todas')
@@ -61,26 +68,3 @@ onMounted(async () => {
   getSurveys(1)
 })
 </script>
-
-<style scoped>
-/* Toolbar */
-.toolbar {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1.5rem;
-}
-.search {
-  flex: 1;
-  padding: 0.6rem 1rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-.filter-btn {
-  margin-left: 1rem;
-  background: #f7f7f7;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 0.6rem 1.2rem;
-  cursor: pointer;
-}
-</style>

@@ -1,0 +1,50 @@
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+.search {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+.filter-btn {
+  margin-left: 1rem;
+  background: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+}
+
+.title-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.new-survey-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: #3b82f6;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background 0.2s ease;
+}
+
+.new-survey-btn:hover {
+  background-color: #2563eb;
+}
+
+.plus {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-right: 2px;
+}
