@@ -2,17 +2,8 @@
   <header class="header">
     <nav class="nav container">
       <RouterLink to="/" class="nav__logo">
-        <img src="@/assets/images/rednova_logo.png" alt="Logo RedNova" />
+        <img src="" alt="Logo" />
       </RouterLink>
-
-      <div class="nav__menu">
-        <ul class="nav__list">
-          <li><RouterLink to="/" class="nav__link">INICIO</RouterLink></li>
-          <li><RouterLink to="/servicios" class="nav__link">SERVICIOS</RouterLink></li>
-          <li><RouterLink to="/nosotros" class="nav__link">NOSOTROS</RouterLink></li>
-          <li><RouterLink to="/contacto" class="nav__link">CONTÁCTENOS</RouterLink></li>
-        </ul>
-      </div>
 
       <div>
         <template v-if="!data_request">
@@ -30,7 +21,7 @@
                 @click="showDropdown = !showDropdown"
               />
               <div v-if="showDropdown" class="dropdown">
-                <RouterLink to="/admin" class="dropdown-item" @click="showDropdown = false">
+                <RouterLink to="/" class="dropdown-item" @click="showDropdown = false">
                   Administración
                 </RouterLink>
                 <button class="dropdown-item" @click="handleLogout">Cerrar sesión</button>
@@ -54,7 +45,7 @@ import router from '@/router'
 import { useLoginStore } from '@/stores/login-store'
 
 // styles
-import '@/styles/css/headers.css'
+import '@/styles/css/header.css'
 
 const loginStore = useLoginStore()
 const { data_request } = storeToRefs(loginStore)

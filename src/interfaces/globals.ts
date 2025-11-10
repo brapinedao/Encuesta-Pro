@@ -35,3 +35,12 @@ export interface IUserToCreate {
   name: string
   rol: string
 }
+
+export interface ISurveyResponse {
+  id: number
+  title: string
+  description: string
+  responses: number
+  date: string
+  status: string
+}

@@ -2,7 +2,7 @@
   <div class="login-container">
     <div class="login-card">
       <RouterLink to="/" class="close-btn">×</RouterLink>
-      <img src="@/assets/images/rednova_logo.png" alt="Logo RedNova" class="login-logo" />
+      <img src="" alt="Logo" class="login-logo" />
       <h2 style="margin-top: 2px">Login</h2>
 
       <form @submit.prevent="handleLogin" style="margin-top: 8px">

@@ -113,7 +113,3 @@ export const useLoginStore = defineStore('login', {
     },
   },
 })
-
-// If you are using pinia-plugin-persistedstate, add this to your store file or main.ts
-// import { useLoginStore } from './login-store'
-// useLoginStore.persist = true
