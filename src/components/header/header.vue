@@ -2,7 +2,7 @@
   <header class="header">
     <nav class="nav container">
       <RouterLink to="/" class="nav__logo">
-        <img src="" alt="Logo" />
+        <img src="@/assets/logo.svg" alt="Encuesta Pro" />
       </RouterLink>
 
       <div>

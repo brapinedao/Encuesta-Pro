@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <div class="login-card">
-      <img src="" alt="Logo" class="login-logo" />
+      <img src="@/assets/logo.svg" alt="Encuesta Pro" class="login-logo" />
       <h2 style="margin-top: 2px">Login</h2>
 
       <form @submit.prevent="handleLogin" style="margin-top: 8px">

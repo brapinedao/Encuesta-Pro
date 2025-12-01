@@ -35,7 +35,6 @@ export function decodeToken(token: string): ITokenPayload | null {
     )
     return JSON.parse(jsonPayload)
   } catch (error) {
-    console.error('Error al decodificar token:', error)
     return null
   }
 }

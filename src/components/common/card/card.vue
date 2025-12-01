@@ -12,7 +12,7 @@
     </div>
 
     <div class="actions">
-      <button class="primary">Ver Encuesta</button>
+      <button class="primary" @click="viewSurvey">Ver Encuesta</button>
       <button class="secondary">📊 Resultados</button>
       <button class="secondary" @click="copyPublicLink" title="Copiar link público">
         {{ copied ? '✓ Copiado' : '🔗 Copiar Link' }}
@@ -24,6 +24,7 @@
 <script setup lang="ts">
 // vue
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 // composables
 import { useAlert } from '@/composables/useAlert'
@@ -40,6 +41,11 @@ const props = defineProps<{
   status: string
 }>()
 const copied = ref(false)
+const router = useRouter()
+
+const viewSurvey = () => {
+  router.push({ path: `/encuesta/${props.id}`, query: { preview: 'true' } })
+}
 
 const copyPublicLink = async () => {
   const link = `${window.location.origin}/encuesta/${props.id}`
@@ -53,7 +59,6 @@ const copyPublicLink = async () => {
       copied.value = false
     }, 2000)
   } catch (error) {
-    console.error('Error al copiar:', error)
     useAlert().showAlert('Error al copiar el link', 'error', 2000)
   }
 }

@@ -22,6 +22,7 @@
             type="text"
             class="input-text"
             :required="question.required"
+            :disabled="isPreviewMode"
           />
 
           <!-- Textarea -->
@@ -31,6 +32,7 @@
             class="input-textarea"
             :required="question.required"
             rows="4"
+            :disabled="isPreviewMode"
           ></textarea>
 
           <!-- Radio Buttons -->
@@ -42,6 +44,7 @@
                 :value="option.id"
                 v-model="answers[question.id]"
                 :required="question.required"
+                :disabled="isPreviewMode"
               />
               {{ option.text }}
             </label>
@@ -50,15 +53,21 @@
           <!-- Checkboxes -->
           <div v-else-if="question.fieldType === 'checkbox'" class="options-group">
             <label v-for="option in question.options" :key="option.id" class="option-label">
-              <input type="checkbox" :value="option.id" v-model="answers[question.id]" />
+              <input
+                type="checkbox"
+                :value="option.id"
+                v-model="answers[question.id]"
+                :disabled="isPreviewMode"
+              />
               {{ option.text }}
             </label>
           </div>
         </div>
 
-        <button type="submit" class="submit-button" :disabled="submitting">
+        <button v-if="!isPreviewMode" type="submit" class="submit-button" :disabled="submitting">
           {{ submitting ? 'Enviando...' : 'Enviar Respuestas' }}
         </button>
+        <button v-else type="button" class="submit-button" @click="router.push('/')">Volver</button>
       </form>
 
       <div v-if="submitted" class="success-message">
@@ -102,6 +111,7 @@ const router = useRouter()
 
 // data
 const surveyId = parseInt(route.params.id as string)
+const isPreviewMode = ref(route.query.preview === 'true')
 const survey = ref(surveysStore.currentSurvey)
 const loading = ref(true)
 const submitting = ref(false)
