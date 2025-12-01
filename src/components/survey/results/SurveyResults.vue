@@ -40,10 +40,15 @@
         <div class="chart-display">
           <div v-if="selectedQuestion" class="chart-content">
             <div class="chart-header">
-              <h2>{{ selectedQuestion.questionText }}</h2>
-              <p class="chart-subtitle">
-                Tipo: {{ getQuestionTypeLabel(selectedQuestion.fieldType) }}
-              </p>
+              <div class="header-content">
+                <h2>{{ selectedQuestion.questionText }}</h2>
+                <p class="chart-subtitle">
+                  Tipo: {{ getQuestionTypeLabel(selectedQuestion.fieldType) }}
+                </p>
+              </div>
+              <button class="export-btn ml-auto" @click="exportToPDF" :disabled="exporting">
+                <Download :size="16" />
+              </button>
             </div>
 
             <div
@@ -63,20 +68,59 @@
               </button>
             </div>
 
-            <div
-              v-if="
-                selectedQuestion.fieldType === 'radio' || selectedQuestion.fieldType === 'checkbox'
-              "
-              class="chart-wrapper"
-            >
-              <component
-                :is="getChartComponent()"
-                :data="getChartData(selectedQuestion)"
-                :options="getChartOptions()"
-              />
+            <div class="report-container">
+              <div
+                v-if="
+                  selectedQuestion.fieldType === 'radio' ||
+                  selectedQuestion.fieldType === 'checkbox'
+                "
+                class="chart-wrapper"
+              >
+                <component
+                  :is="getChartComponent()"
+                  :data="getChartData(selectedQuestion)"
+                  :options="getChartOptions()"
+                />
+              </div>
+
+              <!-- Data Table for PDF Report -->
+              <div class="data-table-container">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Opción</th>
+                      <th>Respuestas</th>
+                      <th>Porcentaje</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(item, idx) in selectedQuestion.data" :key="idx">
+                      <td>
+                        <span
+                          class="color-indicator"
+                          :style="{
+                            backgroundColor:
+                              getChartData(selectedQuestion).datasets?.[0]?.backgroundColor?.[
+                                idx % 7
+                              ] || '#ccc',
+                          }"
+                        ></span>
+                        {{ item.label }}
+                      </td>
+                      <td>{{ item.value }}</td>
+                      <td>{{ calculatePercentage(item.value) }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
 
-            <div v-else class="text-field-info">
+            <div
+              v-if="
+                selectedQuestion.fieldType === 'text' || selectedQuestion.fieldType === 'textarea'
+              "
+              class="text-field-info"
+            >
               <div class="info-card">
                 <p>
                   Esta es una pregunta de tipo
@@ -125,7 +169,11 @@ import {
 } from 'chart.js'
 
 // lucide icons
-import { BarChart3, PieChart, Circle, TrendingUp, ArrowLeft } from 'lucide-vue-next'
+import { BarChart3, PieChart, Circle, TrendingUp, ArrowLeft, Download } from 'lucide-vue-next'
+
+// pdf generation
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
 
 // stores
 import { useSurveysStore } from '@/stores/surveys-store'
@@ -135,6 +183,7 @@ import type { ISurveyStatisticsResponse } from '@/interfaces/globals'
 
 // styles
 import '@/styles/css/survey/results.css'
+import { useAlert } from '@/composables/useAlert'
 
 // Register Chart.js components
 ChartJS.register(
@@ -158,6 +207,7 @@ const loading = ref(true)
 const statistics = ref<ISurveyStatisticsResponse | null>(null)
 const selectedQuestionIndex = ref<number | null>(null)
 const selectedChartType = ref<'bar' | 'pie' | 'doughnut' | 'line'>('bar')
+const exporting = ref(false)
 
 const chartTypes: Array<{ value: 'bar' | 'pie' | 'doughnut' | 'line'; label: string; icon: any }> =
   [
@@ -264,6 +314,59 @@ const getQuestionTypeLabel = (fieldType: string) => {
     checkbox: 'Selección múltiple',
   }
   return labels[fieldType] || fieldType
+}
+
+const calculatePercentage = (value: number) => {
+  if (!selectedQuestion.value) return '0%'
+  const total = selectedQuestion.value.data.reduce((acc, curr) => acc + curr.value, 0)
+  if (total === 0) return '0%'
+  return `${((value / total) * 100).toFixed(1)}%`
+}
+
+const exportToPDF = async () => {
+  if (!selectedQuestion.value) return
+
+  exporting.value = true
+
+  try {
+    // Wait for DOM to update if needed
+    await new Promise((resolve) => setTimeout(resolve, 100))
+
+    const element = document.querySelector('.report-container') as HTMLElement
+    if (!element) return
+
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+      logging: false,
+      backgroundColor: '#ffffff',
+    })
+
+    const imgData = canvas.toDataURL('image/png')
+    const pdf = new jsPDF({
+      orientation: 'portrait',
+      unit: 'mm',
+      format: 'a4',
+    })
+
+    const imgProps = pdf.getImageProperties(imgData)
+    const pdfWidth = pdf.internal.pageSize.getWidth()
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width
+
+    // Add title
+    pdf.setFontSize(16)
+    pdf.text(statistics.value?.surveyTitle || 'Reporte de Encuesta', 10, 10)
+
+    // Add image centered vertically if possible, or just below title
+    pdf.addImage(imgData, 'PNG', 0, 20, pdfWidth, pdfHeight)
+
+    pdf.save(`reporte-${selectedQuestion.value.questionId}.pdf`)
+    useAlert().showAlert('Reporte generado correctamente', 'success', 3000)
+  } catch (error) {
+    useAlert().showAlert('Error al generar PDF', 'error', 3000)
+  } finally {
+    exporting.value = false
+  }
 }
 
 onMounted(async () => {
