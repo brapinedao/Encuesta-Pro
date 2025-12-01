@@ -4,7 +4,7 @@
   right: 20px;
   padding: 18px 28px;
   border-radius: 8px;
-  color: white;
+  color: var(--white-color);
   font-size: 1.1rem;
   font-weight: 600;
   z-index: 9999;
@@ -21,17 +21,17 @@
 }
 
 .custom-alert--success {
-  background-color: #4caf50;
+  background-color: var(--success-color);
 }
 .custom-alert--error {
-  background-color: #f44336;
+  background-color: var(--danger-color);
 }
 .custom-alert--warning {
-  background-color: #ff9800;
+  background-color: var(--warning-color);
 }
 .custom-alert--info {
-  background-color: #2196f3;
+  background-color: var(--primary-color);
 }
 .custom-alert--default {
-  background-color: #607d8b;
+  background-color: var(--secondary-color);
 }

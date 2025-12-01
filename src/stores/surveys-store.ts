@@ -97,5 +97,18 @@ export const useSurveysStore = defineStore('surveys', {
         this.loading = false
       }
     },
+
+    async fetchSurveyStatistics(id: number) {
+      this.loading = true
+      try {
+        const response = await api.get(`/api/Statistics/survey/${id}`)
+        return response.data
+      } catch (error) {
+        useAlert().showAlert('Error al cargar las estadísticas', 'error', 3000)
+        return null
+      } finally {
+        this.loading = false
+      }
+    },
   },
 })

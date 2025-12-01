@@ -6,6 +6,7 @@ import homeView from '@/views/home-view.vue'
 import loginView from '@/views/login-view.vue'
 import surveyBuilder from '@/views/survey-builder-view.vue'
 import surveyPublicView from '@/views/survey-public-view.vue'
+import surveyResultsView from '@/views/survey-results-view.vue'
 import notFoundView from '@/views/not-found-view.vue'
 
 // layouts
@@ -40,6 +41,12 @@ const routes: RouteRecordRaw[] = [
     component: authLayout,
     meta: { requiresAuth: false },
     children: [{ path: '', name: 'survey-public', component: surveyPublicView }],
+  },
+  {
+    path: '/resultados/:id',
+    component: defaultLayout,
+    meta: { requiresAuth: true },
+    children: [{ path: '', name: 'survey-results', component: surveyResultsView }],
   },
   {
     path: '/:pathMatch(.*)*',

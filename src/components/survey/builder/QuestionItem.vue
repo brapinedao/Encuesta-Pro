@@ -50,15 +50,23 @@
       <div v-if="['radio', 'checkbox'].includes(local.fieldType)" class="options-editor">
         <div v-for="(option, i) in local.options" :key="i" class="option-edit">
           <input v-model="option.text" placeholder="Opción..." />
-          <button class="remove-option" @click="removeOption(i)">X</button>
+          <button class="remove-option" @click="removeOption(i)">
+            <X :size="16" />
+          </button>
         </div>
-        <button class="add-option" @click="addOption">+ Agregar opción</button>
+        <button class="add-option" @click="addOption">
+          <Plus :size="16" />
+          Agregar opción
+        </button>
       </div>
 
       <label class="required-checkbox">
         <input type="checkbox" v-model="local.required" /> Requerida
       </label>
-      <button class="delete-btn" @click="$emit('delete')">Eliminar</button>
+      <button class="delete-btn" @click="$emit('delete')">
+        <Trash2 :size="16" />
+        Eliminar
+      </button>
     </div>
   </div>
 </template>
@@ -66,6 +74,9 @@
 <script setup lang="ts">
 // vue
 import { reactive, watch } from 'vue'
+
+// lucide icons
+import { X, Plus, Trash2 } from 'lucide-vue-next'
 
 // interfaces
 import type { IQuestion } from '@/interfaces/globals'

@@ -1,7 +1,7 @@
 .survey-builder {
   max-width: 800px;
   margin: 2rem auto;
-  background: #fff;
+  background: var(--white-color);
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
@@ -10,36 +10,73 @@
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
+  color: var(--dark-color);
 }
 .questions {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
+
+.survey-header-inputs {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.survey-title-input {
+  font-size: 1.5rem;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  width: 100%;
+}
+
+.survey-desc-input {
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  min-height: 60px;
+  width: 100%;
+  font-family: inherit;
+}
 .add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   margin-top: 1rem;
   padding: 0.6rem 1.2rem;
-  background: #e5e7eb;
-  border: none;
+  background: var(--light-gray-color);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   cursor: pointer;
+  color: var(--text-color);
+  font-weight: 500;
+  transition: all 0.2s;
 }
 .add-btn:hover {
-  background: #dbeafe;
+  background: #eff6ff;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
 }
 .actions {
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
   margin-top: 2rem;
 }
 .save-btn {
-  background: #2563eb;
-  color: #fff;
+  background: var(--primary-color);
+  color: var(--white-color);
   border: none;
   padding: 0.7rem 1.5rem;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
+  transition: background 0.2s;
 }
 .save-btn:hover {
-  background: #1d4ed8;
+  background: var(--primary-hover);
 }

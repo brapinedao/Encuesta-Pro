@@ -10,17 +10,17 @@
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
-  color: #555;
+  color: var(--secondary-color);
   transition:
     background 0.2s ease,
     color 0.2s ease;
 }
 .tab:hover {
-  background: #f4f4f4;
+  background: var(--light-gray-color);
 }
 .tab.active {
-  background: #e8f0ff;
-  color: #2563eb;
+  background: #eff6ff;
+  color: var(--primary-color);
   font-weight: 600;
 }
 .count {

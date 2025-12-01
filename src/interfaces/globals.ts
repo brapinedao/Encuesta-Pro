@@ -176,6 +176,21 @@ export interface ISurveyResponseData {
 }
 
 // Statistics Interfaces
+export interface ISurveyStatisticsResponse {
+  surveyId: number
+  surveyTitle: string
+  totalResponses: number
+  questions: {
+    questionId: number
+    questionText: string
+    fieldType: string
+    data: {
+      label: string
+      value: number
+    }[]
+  }[]
+}
+
 export interface IQuestionStatistics {
   questionId: number
   questionTitle: string

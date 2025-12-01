@@ -4,16 +4,16 @@
   align-items: center;
   min-height: 100vh;
   padding: 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--light-gray-color);
 }
 
 .not-found-content {
   text-align: center;
   max-width: 600px;
-  background: white;
+  background: var(--white-color);
   padding: 3rem;
   border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
 }
 
 .not-found-image {
@@ -25,21 +25,21 @@
 
 .not-found-content h1 {
   font-size: 2rem;
-  color: #2c3e50;
+  color: var(--dark-color);
   margin-bottom: 1rem;
 }
 
 .not-found-content p {
   font-size: 1.1rem;
-  color: #7f8c8d;
+  color: var(--secondary-color);
   margin-bottom: 2rem;
 }
 
 .back-button {
   display: inline-block;
   padding: 0.75rem 2rem;
-  background: #3498db;
-  color: white;
+  background: var(--primary-color);
+  color: var(--white-color);
   text-decoration: none;
   border-radius: 6px;
   font-weight: 600;
@@ -47,5 +47,5 @@
 }
 
 .back-button:hover {
-  background: #2980b9;
+  background: var(--primary-hover);
 }

@@ -3,14 +3,20 @@
 
 :root {
   /* Colores */
-  --primary-color: #f7b733;
-  --dark-color: #2c3e50;
-  --text-color: #333;
-  --light-gray-color: #f4f4f4;
-  --white-color: #fff;
+  --primary-color: #2563eb;
+  --primary-hover: #1d4ed8;
+  --secondary-color: #64748b;
+  --dark-color: #1e293b;
+  --text-color: #334155;
+  --light-gray-color: #f8fafc;
+  --border-color: #e2e8f0;
+  --white-color: #ffffff;
+  --success-color: #10b981;
+  --danger-color: #ef4444;
+  --warning-color: #f59e0b;
 
   /* Tipografía */
-  --body-font: 'Montserrat', sans-serif;
+  --body-font: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 * {
@@ -66,7 +72,7 @@ ul {
 }
 
 .button:hover {
-  background-color: #e6a82e;
+  background-color: var(--primary-hover);
 }
 
 /* HEADER / NAVBAR */
@@ -173,10 +179,9 @@ ul {
   line-height: 1.5;
 }
 
-/* SERVICIOS GRID */
 .servicios__container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Rejilla responsive */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 30px;
 }
 

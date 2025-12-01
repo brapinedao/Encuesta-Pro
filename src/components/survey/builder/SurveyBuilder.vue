@@ -1,20 +1,11 @@
 <template>
   <div class="survey-builder">
-    <div
-      class="survey-header-inputs"
-      style="margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px"
-    >
-      <input
-        v-model="surveyTitle"
-        class="survey-title-input"
-        placeholder="Título de la encuesta"
-        style="font-size: 1.5rem; padding: 10px; border: 1px solid #ddd; border-radius: 4px"
-      />
+    <div class="survey-header-inputs">
+      <input v-model="surveyTitle" class="survey-title-input" placeholder="Título de la encuesta" />
       <textarea
         v-model="surveyDescription"
         class="survey-desc-input"
         placeholder="Descripción de la encuesta"
-        style="padding: 10px; border: 1px solid #ddd; border-radius: 4px; min-height: 60px"
       ></textarea>
     </div>
     <div class="questions">
@@ -27,7 +18,10 @@
       />
     </div>
 
-    <button class="add-btn" @click="addQuestion">+ Agregar pregunta</button>
+    <button class="add-btn" @click="addQuestion">
+      <Plus :size="18" />
+      Agregar pregunta
+    </button>
 
     <div class="actions">
       <button class="save-btn" @click="router.push('/')">Volver</button>
@@ -40,6 +34,9 @@
 // vue
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+
+// lucide icons
+import { Plus } from 'lucide-vue-next'
 
 // components
 import QuestionItem from '@/components/survey/builder/QuestionItem.vue'

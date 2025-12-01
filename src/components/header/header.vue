@@ -22,9 +22,13 @@
               />
               <div v-if="showDropdown" class="dropdown">
                 <RouterLink to="/" class="dropdown-item" @click="showDropdown = false">
+                  <LayoutDashboard :size="16" />
                   Administración
                 </RouterLink>
-                <button class="dropdown-item" @click="handleLogout">Cerrar sesión</button>
+                <button class="dropdown-item" @click="handleLogout">
+                  <LogOut :size="16" />
+                  Cerrar sesión
+                </button>
               </div>
             </div>
           </div>
@@ -40,6 +44,9 @@ import { RouterLink } from 'vue-router'
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import router from '@/router'
+
+// lucide icons
+import { LayoutDashboard, LogOut } from 'lucide-vue-next'
 
 // store
 import { useLoginStore } from '@/stores/login-store'
