@@ -22,6 +22,7 @@
     <div class="cards">
       <div v-for="survey in filteredSurveys" :key="survey.id">
         <Card
+          :id="survey.id"
           :title="survey.title"
           :description="survey.description"
           :responses="survey.responses"
@@ -43,28 +44,53 @@ import Card from '@/components/common/card/card.vue'
 import Tabs from '@/components/common/tabs/tabs.vue'
 
 // store
-import { useHomeStore } from '@/stores/home-store'
+import { useSurveysStore } from '@/stores/surveys-store'
+import * as authService from '@/services/auth.service'
+
+// styles
+import '@/styles/css/home.css'
 
 // imports
-const { getSurveys } = useHomeStore()
-const { surveys } = storeToRefs(useHomeStore())
-import '@/styles/css/home.css'
+const surveysStore = useSurveysStore()
+const { surveys } = storeToRefs(surveysStore)
 
 // tabs
 const currentTab = ref('Todas')
 const tabs = ['Todas', 'Activas', 'Borradores', 'Cerradas']
+
 const counts = computed(() => ({
   Todas: surveys.value.length,
-  Activas: surveys.value.filter((s) => s.status === 'Activa').length,
-  Borradores: surveys.value.filter((s) => s.status === 'Borrador').length,
-  Cerradas: surveys.value.filter((s) => s.status === 'Cerrada').length,
+  Activas: surveys.value.filter((s) => s.isActive).length,
+  Borradores: 0,
+  Cerradas: surveys.value.filter((s) => !s.isActive).length,
 }))
+
 const filteredSurveys = computed(() => {
-  if (currentTab.value === 'Todas') return surveys.value
-  return surveys.value.filter((s) => s.status === currentTab.value.slice(0, -1))
+  let filtered = []
+  if (currentTab.value === 'Todas') {
+    filtered = surveys.value
+  } else if (currentTab.value === 'Activas') {
+    filtered = surveys.value.filter((s) => s.isActive)
+  } else if (currentTab.value === 'Cerradas') {
+    filtered = surveys.value.filter((s) => !s.isActive)
+  } else if (currentTab.value === 'Borradores') {
+    filtered = []
+  }
+
+  return filtered.map((s) => ({
+    id: s.id,
+    title: s.title,
+    description: s.description,
+    responses: s.responsesCount,
+    date: new Date(s.createdAt || Date.now()).toLocaleDateString(),
+    status: s.isActive ? 'Activa' : 'Cerrada',
+  }))
 })
 
 onMounted(async () => {
-  getSurveys(1)
+  const companyId = authService.getCompanyId()
+  if (companyId) {
+    await surveysStore.fetchSurveysByCompany(companyId)
+  }
 })
 </script>
